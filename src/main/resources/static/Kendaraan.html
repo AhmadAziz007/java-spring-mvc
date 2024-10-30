@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Data Kendaraan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+
+<div class="container mt-4">
+    <h3 class="text-primary">
+        <i class="fas fa-folder"></i> Aplikasi Data Kendaraan
+    </h3>
+
+    <!-- Search Form -->
+    <div class="p-3 my-3" style="background-color: #f9e6e6;">
+        <div class="form-group row">
+            <label for="noRegistrasi" class="col-sm-2 col-form-label">No Registrasi</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="noRegistrasi" placeholder="No Registrasi">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="namaPemilik" class="col-sm-2 col-form-label">Nama Pemilik</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="namaPemilik" placeholder="Nama Pemilik">
+            </div>
+        </div>
+        <button class="btn btn-primary" id="searchButton">Search</button>
+        <button class="btn btn-primary" id="addButton">Add</button>
+    </div>
+
+    <!-- Data Table -->
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>No</th>
+            <th>No Registrasi</th>
+            <th>Nama Pemilik</th>
+            <th>Merk Kendaraan</th>
+            <th>Tahun Pembuatan</th>
+            <th>Kapasitas</th>
+            <th>Warna</th>
+            <th>Bahan Bakar</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="dataTable">
+        <!-- Data rows will be added here dynamically -->
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Tambahkan di dalam <head> di public/index.html -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script src="app.js"></script>
+</body>
+
+</html>

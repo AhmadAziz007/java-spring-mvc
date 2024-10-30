@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aplikasi Data Kendaraan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+<div class="container mt-4">
+    <h3 class="text-primary"><i class="fas fa-folder"></i> Aplikasi Data Kendaraan</h3>
+
+    <!-- Search Form -->
+    <div class="p-3 my-3" style="background-color: #f9e6e6;">
+        <div class="form-group row">
+            <label for="noRegistrasi" class="col-sm-2 col-form-label">No Registrasi</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="noRegistrasi" placeholder="No Registrasi">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="namaPemilik" class="col-sm-2 col-form-label">Nama Pemilik</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="namaPemilik" placeholder="Nama Pemilik">
+            </div>
+        </div>
+        <button class="btn btn-primary" id="searchButton">Search</button>
+        <button class="btn btn-primary" onclick="window.location.href='/kendaraan/add'">Add</button>
+    </div>
+
+    <!-- Data Table -->
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>No</th>
+            <th>No Registrasi</th>
+            <th>Nama Pemilik</th>
+            <th>Merk Kendaraan</th>
+            <th>Tahun Pembuatan</th>
+            <th>Kapasitas</th>
+            <th>Warna</th>
+            <th>Bahan Bakar</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="kendaraanTableBody">
+        <tr th:each="item, iterStat : ${kendaraanList}">
+            <td th:text="${iterStat.index + 1}">No</td>
+            <td th:text="${item.noRegistrasi}">No Registrasi</td>
+            <td th:text="${item.namaPemilik}">Nama Pemilik</td>
+            <td th:text="${item.merkKendaraan}">Merk Kendaraan</td>
+            <td th:text="${item.tahunPembuatan}">Tahun Pembuatan</td>
+            <td th:text="${item.kapasitasSilinder}">Kapasitas</td>
+            <td th:text="${item.warnaKendaraan}">Warna</td>
+            <td th:text="${item.bahanBakar}">Bahan Bakar</td>
+            <td>
+                <button class="btn btn-info btn-sm">Detail</button>
+                <button class="btn btn-warning btn-sm">Edit</button>
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#searchButton').click(function () {
+            const noRegistrasi = $('#noRegistrasi').val();
+            const namaPemilik = $('#namaPemilik').val();
+
+            $.ajax({
+                type: 'GET',
+                url: '/kendaraan/list',
+                data: { noRegistrasi, namaPemilik },
+                success: function(response) {
+                    $('#kendaraanTableBody').empty();
+                    response.forEach(function(item, index) {
+                        $('#kendaraanTableBody').append(
+                            `<tr>
+                                <td>${index + 1}</td>
+                                <td>${item.noRegistrasi}</td>
+                                <td>${item.namaPemilik}</td>
+                                <td>${item.merkKendaraan}</td>
+                                <td>${item.tahunPembuatan}</td>
+                                <td>${item.kapasitasSilinder}</td>
+                                <td>${item.warnaKendaraan}</td>
+                                <td>${item.bahanBakar}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm">Detail</button>
+                                    <button class="btn btn-warning btn-sm">Edit</button>
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </td>
+                            </tr>`
+                        );
+                    });
+                },
+                error: function(error) {
+                    alert('Gagal mengambil data kendaraan!');
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
