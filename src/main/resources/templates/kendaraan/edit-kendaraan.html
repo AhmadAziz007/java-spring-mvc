@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Data Kendaraan</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+<body>
+<div class="container mt-4">
+    <h3 class="text-primary">Update Data Kendaraan</h3>
+
+    <div id="message" class="alert alert-success" style="display: none;"></div>
+
+    <form id="editKendaraanForm">
+        <input type="hidden" id="kendaraanId" th:value="${mstKendaraanDto.kendaraanId}">
+
+        <div class="form-group">
+            <label for="noRegistrasi">No. Registrasi Kendaraan</label>
+            <input type="text" id="noRegistrasi" th:value="${mstKendaraanDto.noRegistrasi}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="namaPemilik">Nama Pemilik</label>
+            <input type="text" id="namaPemilik" th:value="${mstKendaraanDto.namaPemilik}"  class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="merkKendaraan">Merk Kendaraan</label>
+            <input type="text" id="merkKendaraan" th:value="${mstKendaraanDto.merkKendaraan}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="alamat">Alamat Pemilik Kendaraan</label>
+            <textarea id="alamat" th:text="${mstKendaraanDto.alamat}" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="tahunPembuatan">Tahun Pembuatan</label>
+            <input type="number" id="tahunPembuatan" th:value="${mstKendaraanDto.tahunPembuatan}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="kapasitasSilinder">Kapasitas Silinder</label>
+            <input type="number" id="kapasitasSilinder" th:value="${mstKendaraanDto.kapasitasSilinder}" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="warnaKendaraan">Warna Kendaraan</label>
+            <select id="warnaKendaraan" th:field="${mstKendaraanDto.warnaKendaraan}" class="form-control" required>
+                <option value="">Pilih Warna</option>
+                <option value="Merah">Merah</option>
+                <option value="Biru">Biru</option>
+                <option value="Hitam">Hitam</option>
+                <option value="Putih">Putih</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="bahanBakar">Bahan Bakar</label>
+            <input type="text" id="bahanBakar" th:value="${mstKendaraanDto.bahanBakar}" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="button" class="btn btn-secondary" onclick="window.location.href='/kendaraan/list'">Kembali</button>
+    </form>
+</div>
+
+<!-- jQuery Library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap Bundle -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#editKendaraanForm').submit(function(event) {
+            event.preventDefault();
+            const kendaraanId = $('#kendaraanId').val();
+
+            const data = {
+                noRegistrasi: $('#noRegistrasi').val(),
+                namaPemilik: $('#namaPemilik').val(),
+                merkKendaraan: $('#merkKendaraan').val(),
+                alamat: $('#alamat').val(),
+                tahunPembuatan: $('#tahunPembuatan').val(),
+                kapasitasSilinder: $('#kapasitasSilinder').val(),
+                warnaKendaraan: $('#warnaKendaraan').val(),
+                bahanBakar: $('#bahanBakar').val()
+            };
+
+            $.ajax({
+                type: 'PUT',
+                url: `/kendaraan/edit/${kendaraanId}`,
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function() {
+                    alert('Data kendaraan berhasil diperbarui!');
+                    window.location.href = '/kendaraan/list';
+                },
+                error: function(xhr, status, error) {
+                alert('Error updating data: ' + (xhr.responseText || error));
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

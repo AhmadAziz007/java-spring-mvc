@@ -1,6 +1,7 @@
 package com.kendaraan.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.kendaraan.model.MstKendaraan;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,19 @@ public class MstKendaraanDto {
     private Date createdDatetime;
 
     private Date updatedDatetime;
+
+    public MstKendaraanDto(MstKendaraan mstKendaraan) {
+        this.kendaraanId = mstKendaraan.getKendaraanId();
+        this.noRegistrasi = mstKendaraan.getNoRegistrasi();
+        this.namaPemilik = mstKendaraan.getNamaPemilik();
+        this.merkKendaraan = mstKendaraan.getMerkKendaraan();
+        this.alamat = mstKendaraan.getAlamat();
+        this.tahunPembuatan = mstKendaraan.getTahunPembuatan();
+        this.kapasitasSilinder = mstKendaraan.getKapasitasSilinder();
+        this.warnaKendaraan = mstKendaraan.getWarnaKendaraan();
+        this.bahanBakar = mstKendaraan.getBahanBakar();
+        // Tambahkan semua field yang diperlukan
+    }
 
     public Long getKendaraanId() {
         return kendaraanId;

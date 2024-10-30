@@ -11,6 +11,8 @@
 <div class="container mt-4">
     <h3 class="text-primary">Tambah Data Kendaraan</h3>
 
+    <div id="message" class="alert alert-success" style="display: none;"></div>
+
     <form id="addKendaraanForm">
         <div class="form-group">
             <label for="noRegistrasi">No. Registrasi Kendaraan</label>
@@ -40,10 +42,10 @@
             <label for="warnaKendaraan">Warna Kendaraan</label>
             <select id="warnaKendaraan" class="form-control" required>
                 <option value="">Pilih Warna</option>
-                <option value="merah">Merah</option>
-                <option value="biru">Biru</option>
-                <option value="hitam">Hitam</option>
-                <option value="putih">Putih</option>
+                <option value="Merah">Merah</option>
+                <option value="Biru">Biru</option>
+                <option value="Hitam">Hitam</option>
+                <option value="Putih">Putih</option>
             </select>
         </div>
         <div class="form-group">
@@ -76,20 +78,22 @@
         $.ajax({
             type: 'POST',
             url: '/kendaraan/add',
-            contentType: 'application/json',  // Set ke JSON
-            data: JSON.stringify(data),  // Konversi ke JSON
+            contentType: 'application/json',
+            data: JSON.stringify(data),
             success: function() {
                 alert('Data kendaraan berhasil ditambahkan!');
                 window.location.href = '/kendaraan/list';
+                console.log('Data kendaraan berhasil ditambahkan:', data);
             },
-            error: function(error) {
+            error: function(xhr, status, error) {
                 alert('Gagal menambahkan data kendaraan!');
-                console.error(error);
+                console.error('Error Status:', status); // Log status error
+                console.error('Error Details:', error); // Log detail error
+                console.error('Response:', xhr.responseText); // Log response dari server
             }
         });
     });
 </script>
-
 
 </body>
 </html>

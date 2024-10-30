@@ -10,8 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/kendaraan")
@@ -39,8 +39,29 @@ public class KendaraanMvcController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String saveKendaraan(@RequestBody MstKendaraanDto mstKendaraanDto) {
-        kendaraanService.createKendaraan(mstKendaraanDto);
-        return "redirect:/kendaraan/list";
+    @ResponseBody
+    public ResponseEntity<String> saveKendaraan(@RequestBody MstKendaraanDto mstKendaraanDto) {
+        ResponseEntity<?> response = kendaraanService.createKendaraan(mstKendaraanDto);
+        return (ResponseEntity<String>) response;
+    }
+
+    @GetMapping("/edit/{kendaraanId}")
+    public String tampilkanFormEditKendaraan(@PathVariable Long kendaraanId, Model model) {
+        Optional<MstKendaraan> kendaraanOpt = kendaraanService.getKendaraanById(kendaraanId);
+        if (kendaraanOpt.isPresent()) {
+            MstKendaraanDto mstKendaraanDto = new MstKendaraanDto(kendaraanOpt.get());
+            model.addAttribute("mstKendaraanDto", mstKendaraanDto);
+            return "kendaraan/edit-kendaraan";
+        } else {
+            model.addAttribute("error", "Kendaraan not found");
+            return "kendaraan/form-kendaraan";
+        }
+    }
+
+    @PutMapping(value = "/edit/{kendaraanId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public ResponseEntity<String> editKendaraan(@PathVariable Long kendaraanId, @RequestBody MstKendaraanDto mstKendaraanDto) {
+        ResponseEntity<?> response = kendaraanService.updateKendaraan(kendaraanId, mstKendaraanDto);
+        return (ResponseEntity<String>) response;
     }
 }

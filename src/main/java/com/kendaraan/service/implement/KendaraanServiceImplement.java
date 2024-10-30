@@ -4,6 +4,7 @@ import com.kendaraan.dto.MstKendaraanDto;
 import com.kendaraan.model.MstKendaraan;
 import com.kendaraan.repository.KendaraanRepository;
 import com.kendaraan.service.KendaraanService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +61,7 @@ public class KendaraanServiceImplement implements KendaraanService {
     }
 
     @Override
+    @Transactional
     public ResponseEntity<?> updateKendaraan(Long kendaraanId, MstKendaraanDto mstKendaraanDto) {
         Optional<MstKendaraan> kendaraanOpt = kendaraanRepository.findByKendaraanId(kendaraanId);
         if (kendaraanOpt.isPresent()) {
@@ -81,6 +83,11 @@ public class KendaraanServiceImplement implements KendaraanService {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Kendaraan not found");
         }
+    }
+
+    @Override
+    public Optional<MstKendaraan> getKendaraanById(Long kendaraanId) {
+        return kendaraanRepository.findById(kendaraanId);
     }
 
     @Override
