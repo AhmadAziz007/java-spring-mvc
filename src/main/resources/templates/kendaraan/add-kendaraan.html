@@ -45,7 +45,7 @@
                 <option value="Merah">Merah</option>
                 <option value="Biru">Biru</option>
                 <option value="Hitam">Hitam</option>
-                <option value="Putih">Putih</option>
+                <option value="Abu-Abu">Abu-Abu</option>
             </select>
         </div>
         <div class="form-group">
@@ -81,7 +81,6 @@
             contentType: 'application/json',
             data: JSON.stringify(data),
             success: function() {
-                alert('Data kendaraan berhasil ditambahkan!');
                 window.location.href = '/kendaraan/list';
                 console.log('Data kendaraan berhasil ditambahkan:', data);
             },

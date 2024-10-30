@@ -2,6 +2,7 @@ package com.kendaraan.mvccontroller;
 
 import com.kendaraan.dto.MstKendaraanDto;
 import com.kendaraan.model.MstKendaraan;
+import com.kendaraan.repository.KendaraanRepository;
 import com.kendaraan.service.KendaraanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -63,5 +64,11 @@ public class KendaraanMvcController {
     public ResponseEntity<String> editKendaraan(@PathVariable Long kendaraanId, @RequestBody MstKendaraanDto mstKendaraanDto) {
         ResponseEntity<?> response = kendaraanService.updateKendaraan(kendaraanId, mstKendaraanDto);
         return (ResponseEntity<String>) response;
+    }
+
+    @GetMapping("/delete/{kendaraanId}")
+    public String deleteKendaraan(@PathVariable Long kendaraanId, Model model) {
+        kendaraanService.deleteKendaraan(kendaraanId);
+        return "redirect:/kendaraan/list";
     }
 }
