@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikasi Data Kendaraan</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+
 <div class="container mt-4">
-    <h3 class="text-primary"><i class="fas fa-folder"></i> Aplikasi Data Kendaraan</h3>
+    <h3 class="text-primary">
+        <i class="fas fa-folder"></i> Aplikasi Data Kendaraan
+    </h3>
 
     <!-- Search Form -->
     <div class="p-3 my-3" style="background-color: #f9e6e6;">
@@ -45,7 +50,7 @@
             <th>Action</th>
         </tr>
         </thead>
-        <tbody id="kendaraanTableBody">
+        <tbody>
         <tr th:each="item, iterStat : ${kendaraanList}">
             <td th:text="${iterStat.index + 1}">No</td>
             <td th:text="${item.noRegistrasi}">No Registrasi</td>
@@ -63,6 +68,7 @@
         </tr>
         </tbody>
     </table>
+    
 </div>
 
 <script>
@@ -74,38 +80,19 @@
             $.ajax({
                 type: 'GET',
                 url: '/kendaraan/list',
-                data: { noRegistrasi, namaPemilik },
-                success: function(response) {
-                    $('#kendaraanTableBody').empty();
-                    response.forEach(function(item, index) {
-                        $('#kendaraanTableBody').append(
-                            `<tr>
-                                <td>${index + 1}</td>
-                                <td>${item.noRegistrasi}</td>
-                                <td>${item.namaPemilik}</td>
-                                <td>${item.merkKendaraan}</td>
-                                <td>${item.tahunPembuatan}</td>
-                                <td>${item.kapasitasSilinder}</td>
-                                <td>${item.warnaKendaraan}</td>
-                                <td>${item.bahanBakar}</td>
-                                <td>
-                                    <button class="btn btn-info btn-sm">Detail</button>
-                                    <button class="btn btn-warning btn-sm">Edit</button>
-                                    <button class="btn btn-danger btn-sm">Delete</button>
-                                </td>
-                            </tr>`
-                        );
-                    });
+                data: { noRegistrasi: noRegistrasi, namaPemilik: namaPemilik },
+                success: function (data) {
+                    $('body').html(data); // Replace current page with new filtered data
                 },
-                error: function(error) {
-                    alert('Gagal mengambil data kendaraan!');
-                    console.error(error);
+                error: function (error) {
+                    console.log("Error:", error);
                 }
             });
         });
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
